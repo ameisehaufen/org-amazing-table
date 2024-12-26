@@ -1,11 +1,11 @@
-;;; org-pretty-table.el --- Replace org-table characters with box-drawing unicode glyphs -*- lexical-binding: t -*-
+;;; org-amazing-table.el --- Replace org-table characters with box-drawing unicode glyphs -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2013, 2023 Matus Goljer
 
 ;; Author: Matus Goljer <matus.goljer@gmail.com>
 ;; Maintainer: Matus Goljer <matus.goljer@gmail.com>
 ;; Keywords: faces
-;; URL: https://github.com/Fuco1/org-pretty-table
+;; URL: https://github.com/Fuco1/org-amazing-table
 ;; Package-Requires: ((org "9") (emacs "24.1"))
 ;; Version: 1.0.0
 ;; Created: 29th November 2013
@@ -33,13 +33,13 @@
 
 (require 'org)
 
-(defconst org-pretty-table-regexp (regexp-opt '("-" "+" "|")))
+(defconst org-amazing-table-regexp (regexp-opt '("-" "+" "|")))
 
-(defgroup org-pretty-table ()
+(defgroup org-amazing-table ()
   "Replace org-table characters with box-drawing unicode glyphs."
   :group 'org)
 
-(defcustom org-pretty-table-charset "┌┐└┘┬┤┴├┼─│"
+(defcustom org-amazing-table-charset "┌┐└┘┬┤┴├┼─│"
   "Charset to draw the table.
 
 The value is a string of length 11 with the characters used to
@@ -58,80 +58,80 @@ The order of the blocks is:
 - cross
 - horizontal bar
 - vertical bar"
-  :group 'org-pretty-table
+  :group 'org-amazing-table
   :type '(choice (const :tag "Single horizontal lines" "┌┐└┘┬┤┴├┼─│")
                  (const :tag "Double horizontal lines" "╒╕╘╛╤╡╧╞╪═│")
                  (string :tag "Custom")))
 
-(defsubst org-pretty-table-ul-corner ()
+(defsubst org-amazing-table-ul-corner ()
   "Return upper left corner character as a string."
   (declare (pure t))
-  (make-string 1 (aref org-pretty-table-charset 0)))
+  (make-string 1 (aref org-amazing-table-charset 0)))
 
-(defsubst org-pretty-table-ur-corner ()
+(defsubst org-amazing-table-ur-corner ()
   "Return upper right corner character as a string."
   (declare (pure t))
-  (make-string 1 (aref org-pretty-table-charset 1)))
+  (make-string 1 (aref org-amazing-table-charset 1)))
 
-(defsubst org-pretty-table-ll-corner ()
+(defsubst org-amazing-table-ll-corner ()
   "Return lower left corner character as a string."
   (declare (pure t))
-  (make-string 1 (aref org-pretty-table-charset 2)))
+  (make-string 1 (aref org-amazing-table-charset 2)))
 
-(defsubst org-pretty-table-lr-corner ()
+(defsubst org-amazing-table-lr-corner ()
   "Return lower right corner character as a string."
   (declare (pure t))
-  (make-string 1 (aref org-pretty-table-charset 3)))
+  (make-string 1 (aref org-amazing-table-charset 3)))
 
-(defsubst org-pretty-table-df-t ()
+(defsubst org-amazing-table-df-t ()
   "Return down facing T character as a string."
   (declare (pure t))
-  (make-string 1 (aref org-pretty-table-charset 4)))
+  (make-string 1 (aref org-amazing-table-charset 4)))
 
-(defsubst org-pretty-table-lf-t ()
+(defsubst org-amazing-table-lf-t ()
   "Return left facing T character as a string."
   (declare (pure t))
-  (make-string 1 (aref org-pretty-table-charset 5)))
+  (make-string 1 (aref org-amazing-table-charset 5)))
 
-(defsubst org-pretty-table-uf-t ()
+(defsubst org-amazing-table-uf-t ()
   "Return up facing T character as a string."
   (declare (pure t))
-  (make-string 1 (aref org-pretty-table-charset 6)))
+  (make-string 1 (aref org-amazing-table-charset 6)))
 
-(defsubst org-pretty-table-rf-t ()
+(defsubst org-amazing-table-rf-t ()
   "Return right facing T character as a string."
   (declare (pure t))
-  (make-string 1 (aref org-pretty-table-charset 7)))
+  (make-string 1 (aref org-amazing-table-charset 7)))
 
-(defsubst org-pretty-table-cross ()
+(defsubst org-amazing-table-cross ()
   "Return cross character as a string."
   (declare (pure t))
-  (make-string 1 (aref org-pretty-table-charset 8)))
+  (make-string 1 (aref org-amazing-table-charset 8)))
 
-(defsubst org-pretty-table-hb ()
+(defsubst org-amazing-table-hb ()
   "Return horizontal bar character as a string."
   (declare (pure t))
-  (make-string 1 (aref org-pretty-table-charset 9)))
+  (make-string 1 (aref org-amazing-table-charset 9)))
 
-(defsubst org-pretty-table-vb ()
+(defsubst org-amazing-table-vb ()
   "Return vertical bar character as a string."
   (declare (pure t))
-  (make-string 1 (aref org-pretty-table-charset 10)))
+  (make-string 1 (aref org-amazing-table-charset 10)))
 
-(defun org-pretty-table-at-table-p ()
+(defun org-amazing-table-at-table-p ()
   "Check if point is at table."
   (save-excursion
     (skip-syntax-forward " " (line-end-position))
     (eq (following-char) ?|)))
 
-(defun org-pretty-table-propertize-region (start end)
+(defun org-amazing-table-propertize-region (start end)
   "Replace org-table characters with box-drawing glyphs between START and END.
 
 Used by jit-lock for dynamic highlighting."
   (save-excursion
     (goto-char start)
     (let (table-end)
-      (while (re-search-forward org-pretty-table-regexp end t)
+      (while (re-search-forward org-amazing-table-regexp end t)
         ;; reached the end of the current table
         (if (and table-end
                  (> (point) table-end))
@@ -160,34 +160,34 @@ Used by jit-lock for dynamic highlighting."
                  (match-beginning 0) (match-end 0)
                  'display
                  (make-string (- (match-end 0) (match-beginning 0))
-                              (aref (org-pretty-table-hb) 0))))
+                              (aref (org-amazing-table-hb) 0))))
               t)
              ((equal "|" match)
               (cond
                ((and (eq (following-char) ?-)
                      (save-excursion
                        (forward-line 1)
-                       (org-pretty-table-at-table-p))
+                       (org-amazing-table-at-table-p))
                      (save-excursion
                        (backward-char 1)
                        (not (bobp)))
                      (save-excursion
                        (forward-line -1)
                        (and (not (bobp))
-                            (org-pretty-table-at-table-p))))
-                (put-text-property (match-beginning 0) (match-end 0) 'display (org-pretty-table-rf-t))
+                            (org-amazing-table-at-table-p))))
+                (put-text-property (match-beginning 0) (match-end 0) 'display (org-amazing-table-rf-t))
                 t)
                ((and (save-excursion
                        (backward-char 1)
                        (eq (preceding-char) ?-))
                      (save-excursion
                        (forward-line 1)
-                       (org-pretty-table-at-table-p))
+                       (org-amazing-table-at-table-p))
                      (save-excursion
                        (forward-line -1)
                        (and (not (bobp))
-                            (org-pretty-table-at-table-p))))
-                (put-text-property (match-beginning 0) (match-end 0) 'display (org-pretty-table-lf-t))
+                            (org-amazing-table-at-table-p))))
+                (put-text-property (match-beginning 0) (match-end 0) 'display (org-amazing-table-lf-t))
                 t)
                ((and (save-excursion
                        (backward-char 1)
@@ -195,32 +195,32 @@ Used by jit-lock for dynamic highlighting."
                      (save-excursion
                        (forward-line -1)
                        (or (bobp)
-                           (not (org-pretty-table-at-table-p)))))
-                (put-text-property (match-beginning 0) (match-end 0) 'display (org-pretty-table-ur-corner))
+                           (not (org-amazing-table-at-table-p)))))
+                (put-text-property (match-beginning 0) (match-end 0) 'display (org-amazing-table-ur-corner))
                 t)
                ((and (save-excursion
                        (backward-char 1)
                        (eq (preceding-char) ?-))
                      (save-excursion
                        (forward-line 1)
-                       (not (org-pretty-table-at-table-p))))
-                (put-text-property (match-beginning 0) (match-end 0) 'display (org-pretty-table-lr-corner))
+                       (not (org-amazing-table-at-table-p))))
+                (put-text-property (match-beginning 0) (match-end 0) 'display (org-amazing-table-lr-corner))
                 t)
                ((and (eq (following-char) ?-)
                      (save-excursion
                        (forward-line -1)
                        (or (bobp)
-                           (not (org-pretty-table-at-table-p)))))
-                (put-text-property (match-beginning 0) (match-end 0) 'display (org-pretty-table-ul-corner))
+                           (not (org-amazing-table-at-table-p)))))
+                (put-text-property (match-beginning 0) (match-end 0) 'display (org-amazing-table-ul-corner))
                 t)
                ((and (eq (following-char) ?-)
                      (save-excursion
                        (forward-line 1)
-                       (not (org-pretty-table-at-table-p))))
-                (put-text-property (match-beginning 0) (match-end 0) 'display (org-pretty-table-ll-corner))
+                       (not (org-amazing-table-at-table-p))))
+                (put-text-property (match-beginning 0) (match-end 0) 'display (org-amazing-table-ll-corner))
                 t)
                (t
-                (put-text-property (match-beginning 0) (match-end 0) 'display (org-pretty-table-vb))
+                (put-text-property (match-beginning 0) (match-end 0) 'display (org-amazing-table-vb))
                 t)))
              ((equal "+" match)
               (cond
@@ -231,11 +231,11 @@ Used by jit-lock for dynamic highlighting."
                      (save-excursion
                        (forward-line -1)
                        (and (not (bobp))
-                            (org-pretty-table-at-table-p)))
+                            (org-amazing-table-at-table-p)))
                      (save-excursion
                        (forward-line 1)
-                       (org-pretty-table-at-table-p)))
-                (put-text-property (match-beginning 0) (match-end 0) 'display (org-pretty-table-cross))
+                       (org-amazing-table-at-table-p)))
+                (put-text-property (match-beginning 0) (match-end 0) 'display (org-amazing-table-cross))
                 t)
                ((and (eq (following-char) ?-)
                      (save-excursion
@@ -244,11 +244,11 @@ Used by jit-lock for dynamic highlighting."
                      (save-excursion
                        (forward-line -1)
                        (or (bobp)
-                           (not (org-pretty-table-at-table-p))))
+                           (not (org-amazing-table-at-table-p))))
                      (save-excursion
                        (forward-line 1)
-                       (org-pretty-table-at-table-p)))
-                (put-text-property (match-beginning 0) (match-end 0) 'display (org-pretty-table-df-t))
+                       (org-amazing-table-at-table-p)))
+                (put-text-property (match-beginning 0) (match-end 0) 'display (org-amazing-table-df-t))
                 t)
                ((and (eq (following-char) ?-)
                      (save-excursion
@@ -264,52 +264,52 @@ Used by jit-lock for dynamic highlighting."
                        (backward-char 1)
                        (forward-line)
                        (not (eq (following-char) ?|))))
-                (put-text-property (match-beginning 0) (match-end 0) 'display (org-pretty-table-uf-t))
+                (put-text-property (match-beginning 0) (match-end 0) 'display (org-amazing-table-uf-t))
                 t))))))))))
 
-(defun org-pretty-table-unpropertize-region (start end)
+(defun org-amazing-table-unpropertize-region (start end)
   "Remove box-drawing compositions between START and END."
   (remove-text-properties start end '(display)))
 
-(defun org-pretty-table-unpropertize-table ()
+(defun org-amazing-table-unpropertize-table ()
   "Remove box-drawing compositions from table at point."
-  (org-pretty-table-unpropertize-region (org-table-begin) (org-table-end)))
+  (org-amazing-table-unpropertize-region (org-table-begin) (org-table-end)))
 
-(defun org-pretty-table-align (oldfun &rest args)
+(defun org-amazing-table-align (oldfun &rest args)
   (unwind-protect
       (progn
-        (org-pretty-table-mode -1)
-        (org-pretty-table-unpropertize-table)
+        (org-amazing-table-mode -1)
+        (org-amazing-table-unpropertize-table)
         (apply oldfun args))
-    (org-pretty-table-mode 1)))
+    (org-amazing-table-mode 1)))
 
 ;;; Minor mode:
 
 ;;;###autoload
-(define-minor-mode org-pretty-table-mode
+(define-minor-mode org-amazing-table-mode
   "Replace org-table characters with box-drawing unicode glyphs."
   :lighter " OPT"
-  (if org-pretty-table-mode
+  (if org-amazing-table-mode
       (progn
-        (jit-lock-register 'org-pretty-table-propertize-region t)
-        (advice-add 'org-table-align :around #'org-pretty-table-align))
-    (jit-lock-unregister 'org-pretty-table-propertize-region)
-    (advice-remove 'org-table-align #'org-pretty-table-align)
-    (org-pretty-table-unpropertize-region (point-min) (point-max))))
+        (jit-lock-register 'org-amazing-table-propertize-region t)
+        (advice-add 'org-table-align :around #'org-amazing-table-align))
+    (jit-lock-unregister 'org-amazing-table-propertize-region)
+    (advice-remove 'org-table-align #'org-amazing-table-align)
+    (org-amazing-table-unpropertize-region (point-min) (point-max))))
 
 ;;;###autoload
-(defun turn-on-org-pretty-table-mode ()
-  "Turn on `org-pretty-table-mode'."
-  (org-pretty-table-mode 1))
+(defun turn-on-org-amazing-table-mode ()
+  "Turn on `org-amazing-table-mode'."
+  (org-amazing-table-mode 1))
 
 ;;;###autoload
-(defun turn-off-org-pretty-table-mode ()
-  "Turn off `org-pretty-table-mode'."
-  (org-pretty-table-mode 0))
+(defun turn-off-org-amazing-table-mode ()
+  "Turn off `org-amazing-table-mode'."
+  (org-amazing-table-mode 0))
 
 ;;;###autoload
-(define-globalized-minor-mode global-org-pretty-table-mode
-  org-pretty-table-mode turn-on-org-pretty-table-mode)
+(define-globalized-minor-mode global-org-amazing-table-mode
+  org-amazing-table-mode turn-on-org-amazing-table-mode)
 
-(provide 'org-pretty-table)
-;;; org-pretty-table.el ends here
+(provide 'org-amazing-table)
+;;; org-amazing-table.el ends here
